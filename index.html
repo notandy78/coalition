@@ -6,15 +6,36 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body { max-width: 700px; margin: 2em auto; font-family: sans-serif; }
+    td, th { cursor: pointer; }
+    .copied::after {
+      content: " ✓";
+      color: green;
+      font-size: 0.8em;
+    }
   </style>
 </head>
 <body>
   <div id="content">Loading...</div>
+
   <script>
+    function makeTableCellsCopyable() {
+      document.querySelectorAll('#content table td, #content table th').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const text = cell.innerText.trim();
+          navigator.clipboard.writeText(text).then(() => {
+            // Optional visual feedback
+            cell.classList.add('copied');
+            setTimeout(() => cell.classList.remove('copied'), 1000);
+          });
+        });
+      });
+    }
+
     fetch('COALITION.md')
       .then(res => res.text())
       .then(text => {
         document.getElementById('content').innerHTML = marked.parse(text);
+        makeTableCellsCopyable(); // add listeners after rendering
       });
   </script>
 </body>
