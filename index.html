@@ -12,22 +12,11 @@
     }
 
     td, th {
-      position: relative;
-      padding-right: 1.5em;
-    }
-
-    .copy-btn {
       cursor: pointer;
-      font-size: 0.9em;
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.6;
     }
 
-    .copy-btn:hover {
-      opacity: 1;
+    td:active, th:active {
+      background-color: #f0f0f0;
     }
   </style>
 </head>
@@ -35,24 +24,12 @@
   <div id="content">Loading...</div>
 
   <script>
-    function addCopyButtonsToTableCells() {
+    function makeTableCellsCopyable() {
       document.querySelectorAll('#content table td, #content table th').forEach(cell => {
-        // Avoid duplicating buttons
-        if (cell.querySelector('.copy-btn')) return;
-
-        const btn = document.createElement('span');
-        btn.textContent = '📋';
-        btn.className = 'copy-btn';
-        btn.title = 'Copy to clipboard';
-
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation(); // Prevent parent click if needed
+        cell.addEventListener('click', () => {
           const text = cell.innerText.trim();
           navigator.clipboard.writeText(text);
         });
-
-        cell.style.position = 'relative';
-        cell.appendChild(btn);
       });
     }
 
@@ -60,7 +37,7 @@
       .then(res => res.text())
       .then(text => {
         document.getElementById('content').innerHTML = marked.parse(text);
-        addCopyButtonsToTableCells();
+        makeTableCellsCopyable();
       });
   </script>
 </body>
