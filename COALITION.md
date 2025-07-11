@@ -1,5 +1,5 @@
-# 🕵️ Coalition Codewords Compendium  
-*For Use by Cleared Agents Only – City 13 Cell – 2025 Edition*
+# 🕵️ VMR Codewords Compendium  
+*For Use by Cleared Agents Only –  – 2025 Edition*
 
 ---
 
